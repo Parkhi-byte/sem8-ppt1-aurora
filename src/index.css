@@ -119,6 +119,6 @@ body {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-.bg-300% {
+.bg-size-300 {
   background-size: 300% auto;
 }

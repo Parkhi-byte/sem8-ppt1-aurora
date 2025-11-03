@@ -74,7 +74,7 @@ const Home = () => {
           <div className="mb-6 animate-fade-in-up">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold mb-4 leading-tight">
               <span className="block text-gray-900 dark:text-white mb-2">Welcome to</span>
-              <span className="block bg-gradient-to-r from-aurora-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient bg-300%">
+              <span className="block bg-gradient-to-r from-aurora-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient bg-size-300">
                 Aurora
               </span>
             </h1>
