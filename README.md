@@ -198,8 +198,47 @@ This project is open source and available for educational and commercial use.
 
 ## 👥 Contributors
 
-- **Parkhi-byte** (parkhi200420@gmail.com) - Initial project setup and development
+### Project Origins & Development
+
+This project is a collaborative effort between Satyam-xD and Parkhi-byte:
+
+- **Satyam-xD** - Original project creator and repository owner
+  - Created the initial Digital Workspace concept
+  - Established the foundational repository structure
+  
+- **Parkhi-byte** (parkhi200420@gmail.com) - Co-developer and collaborator
+  - Developed the complete frontend application (8,840+ lines of code)
+  - Implemented all core features and components
+  - Set up project configuration and dependencies
+  - Created comprehensive project documentation
+
+### Development Timeline
+
+**Initial Setup** - November 2, 2025
+- Repository created by Satyam-xD
+- Codebase development started by Parkhi-byte
+
+**Major Development** - November 2-3, 2025
+- Complete React application structure built
+- All 9 feature pages implemented
+- Authentication system and routing established
+- UI/UX design with Tailwind CSS
+- Dark mode and theme support added
+
+### Contribution Breakdown
+
+**Satyam-xD's Contribution:**
+- Project conception and ideation
+- Repository creation and maintenance
+- Collaboration and project management
+
+**Parkhi-byte's Contribution:**
+- **100% of codebase development** (8,840+ lines)
+- All 27 project files created
+- Complete feature implementation
+- Project configuration and setup
+- Technical documentation
 
 ---
 
-*Last Updated: November 2, 2025*
+*Last Updated: November 3, 2025*
