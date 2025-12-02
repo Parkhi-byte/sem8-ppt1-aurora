@@ -5,7 +5,7 @@ import { startCheckout } from '../services/payments';
 const tiers = [
   {
     name: 'Free',
-    price: '$0',
+    price: '₹0',
     period: 'forever',
     features: [
       'Unlimited Chat History',
@@ -20,7 +20,7 @@ const tiers = [
   },
   {
     name: 'Pro',
-    price: '$12',
+    price: '₹999',
     period: 'per user / month',
     features: [
       'Unlimited Boards & Projects',
@@ -88,8 +88,8 @@ export default function Pricing() {
           <div
             key={tier.name}
             className={`relative rounded-3xl p-8 transition-all duration-300 ${tier.highlight
-                ? 'bg-white dark:bg-gray-800 shadow-2xl scale-105 border-2 border-aurora-500 z-10'
-                : 'bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:-translate-y-1'
+              ? 'bg-white dark:bg-gray-800 shadow-2xl scale-105 border-2 border-aurora-500 z-10'
+              : 'bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:-translate-y-1'
               }`}
           >
             {tier.highlight && (
@@ -125,8 +125,8 @@ export default function Pricing() {
             <button
               onClick={() => handleSelect(tier)}
               className={`w-full py-3 px-6 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg ${tier.highlight
-                  ? 'bg-gradient-to-r from-aurora-600 to-purple-600 hover:from-aurora-700 hover:to-purple-700 text-white hover:shadow-aurora-500/25'
-                  : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
+                ? 'bg-gradient-to-r from-aurora-600 to-purple-600 hover:from-aurora-700 hover:to-purple-700 text-white hover:shadow-aurora-500/25'
+                : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
                 }`}
             >
               {tier.cta}
