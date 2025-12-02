@@ -15,12 +15,13 @@ import TeamManagement from './pages/TeamManagement';
 import PasswordManager from './pages/PasswordManager';
 import Kanban from './pages/Kanban';
 import Pricing from './pages/Pricing';
+import About from './pages/About';
 import './index.css';
 
 // Public route wrapper (redirects to home if already logged in)
 const PublicRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -31,11 +32,11 @@ const PublicRoute = ({ children }) => {
       </div>
     );
   }
-  
+
   if (user) {
     return <Navigate to="/" replace />;
   }
-  
+
   return children;
 };
 
@@ -43,31 +44,40 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route 
-        path="/login" 
+      <Route
+        path="/login"
         element={
           <PublicRoute>
             <Login />
           </PublicRoute>
-        } 
+        }
       />
-      <Route 
-        path="/signup" 
+      <Route
+        path="/signup"
         element={
           <PublicRoute>
             <SignUp />
           </PublicRoute>
-        } 
+        }
       />
-      <Route 
-        path="/pricing" 
+      {/* Publicly accessible routes with Layout */}
+      <Route
+        path="/about"
         element={
-          <PublicRoute>
-            <Pricing />
-          </PublicRoute>
-        } 
+          <Layout>
+            <About />
+          </Layout>
+        }
       />
-      
+      <Route
+        path="/pricing"
+        element={
+          <Layout>
+            <Pricing />
+          </Layout>
+        }
+      />
+
       {/* Protected Routes */}
       <Route
         path="/"
@@ -149,7 +159,7 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-      
+
       {/* Default redirect */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
