@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Pie, Bar } from 'react-chartjs-2';
+import { Pie, Bar, Doughnut } from 'react-chartjs-2';
 import { Plus, MoreHorizontal, Calendar, Filter, ArrowUpRight } from 'lucide-react';
 import {
   Chart as ChartJS,
@@ -59,8 +59,8 @@ function Column({ title, items, status, onMove }) {
           <div key={card.id} className="group bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 cursor-grab active:cursor-grabbing">
             <div className="flex justify-between items-start mb-2">
               <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider ${card.priority === 'high' ? 'bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400' :
-                  card.priority === 'medium' ? 'bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400' :
-                    'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
+                card.priority === 'medium' ? 'bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400' :
+                  'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
                 }`}>
                 {card.priority}
               </span>
@@ -123,23 +123,48 @@ export default function Kanban() {
     ],
   }), [totals]);
 
-  const barData = useMemo(() => ({
+  const bucketData = useMemo(() => ({
     labels: ['To Do', 'In Progress', 'Done'],
     datasets: [
       {
         label: 'Tasks',
         data: [totals.t, totals.p, totals.d],
         backgroundColor: ['#94a3b8', '#3b82f6', '#22c55e'],
-        borderRadius: 6,
+        borderRadius: 4,
+        barThickness: 20,
       },
     ],
   }), [totals]);
 
-  const barOptions = {
+  const memberData = {
+    labels: ['Alex', 'Sarah', 'Mike', 'Lisa'],
+    datasets: [
+      {
+        label: 'Assigned Tasks',
+        data: [3, 5, 2, 4],
+        backgroundColor: '#6366f1',
+        borderRadius: 4,
+        barThickness: 16,
+        indexAxis: 'y',
+      },
+    ],
+  };
+
+  const chartOptions = {
     plugins: { legend: { display: false } },
     scales: {
-      y: { beginAtZero: true, grid: { display: false } },
-      x: { grid: { display: false } }
+      y: { beginAtZero: true, grid: { display: false, drawBorder: false } },
+      x: { grid: { display: false, drawBorder: false } }
+    },
+    maintainAspectRatio: false,
+  };
+
+  const horizontalOptions = {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { beginAtZero: true, grid: { display: false } },
+      y: { grid: { display: false } }
     },
     maintainAspectRatio: false,
   };
@@ -175,49 +200,66 @@ export default function Kanban() {
         </div>
       </div>
 
-      {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total Tasks</p>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{totals.all}</h3>
+      {/* Analytics Dashboard (Teams Style) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+        {/* Card 1: Project Health */}
+        <div className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Project Health</h3>
+            <div className="flex items-end gap-2 mb-4">
+              <span className="text-4xl font-bold text-gray-900 dark:text-white">{totals.completion}%</span>
+              <span className="text-sm text-green-500 font-medium mb-1 flex items-center"><ArrowUpRight size={14} /> +12%</span>
             </div>
-            <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300">
-              <ArrowUpRight size={18} />
+            <div className="w-full bg-gray-100 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+              <div className="bg-green-500 h-full rounded-full" style={{ width: `${totals.completion}%` }}></div>
             </div>
-          </div>
-          <div className="w-full bg-gray-100 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
-            <div className="bg-aurora-500 h-full rounded-full" style={{ width: '100%' }}></div>
+            <p className="text-xs text-gray-400 mt-3">On track to complete by Fri, Dec 15</p>
           </div>
         </div>
 
+        {/* Card 2: Priority Breakdown */}
         <div className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Completion</p>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{totals.completion}%</h3>
+          <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Priority</h3>
+          <div className="flex items-center gap-4 h-32">
+            <div className="w-24 h-24 relative flex-shrink-0">
+              <Doughnut
+                data={{
+                  labels: ['High', 'Medium', 'Low'],
+                  datasets: [{
+                    data: [3, 1, 2],
+                    backgroundColor: ['#ef4444', '#f97316', '#3b82f6'],
+                    borderWidth: 0,
+                    cutout: '70%'
+                  }]
+                }}
+                options={{ plugins: { legend: { display: false } }, maintainAspectRatio: false }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-lg font-bold text-gray-900 dark:text-white">{totals.all}</span>
+              </div>
             </div>
-            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400">
-              <ArrowUpRight size={18} />
+            <div className="flex-1 space-y-2">
+              <div className="flex justify-between text-xs"><span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500"></span>High</span> <span className="font-bold dark:text-white">3</span></div>
+              <div className="flex justify-between text-xs"><span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-500"></span>Med</span> <span className="font-bold dark:text-white">1</span></div>
+              <div className="flex justify-between text-xs"><span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500"></span>Low</span> <span className="font-bold dark:text-white">2</span></div>
             </div>
-          </div>
-          <div className="w-full bg-gray-100 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
-            <div className="bg-green-500 h-full rounded-full" style={{ width: `${totals.completion}%` }}></div>
           </div>
         </div>
 
-        {/* Charts */}
-        <div className="md:col-span-2 grid grid-cols-2 gap-4">
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm flex items-center justify-center">
-            <div className="w-24 h-24">
-              <Pie data={pieData} options={{ plugins: { legend: { display: false } } }} />
-            </div>
+        {/* Card 3: Tasks by Bucket */}
+        <div className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Bucket Status</h3>
+          <div className="h-32 w-full">
+            <Bar data={bucketData} options={chartOptions} />
           </div>
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
-            <div className="h-24">
-              <Bar data={barData} options={barOptions} />
-            </div>
+        </div>
+
+        {/* Card 4: Member Workload */}
+        <div className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Team Load</h3>
+          <div className="h-32 w-full">
+            <Bar data={memberData} options={horizontalOptions} />
           </div>
         </div>
       </div>
