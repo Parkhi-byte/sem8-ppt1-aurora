@@ -71,6 +71,12 @@ const Header = () => {
 
   const publicNavItems = [
     {
+      path: '/',
+      icon: Home,
+      label: 'Home',
+      color: 'from-aurora-500 to-purple-600'
+    },
+    {
       path: '/login',
       icon: LogIn,
       label: 'Login',
@@ -94,11 +100,11 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to={user ? "/" : "/login"} className="flex items-center space-x-3 group">
+          <Link to="/" className="flex items-center space-x-3 group">
             <div className="w-11 h-11 bg-gradient-to-br from-aurora-500 via-aurora-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
               <Sparkles className="text-white" size={22} />
             </div>

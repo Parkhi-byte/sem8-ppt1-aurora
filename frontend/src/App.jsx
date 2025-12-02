@@ -60,7 +60,16 @@ function AppRoutes() {
           </PublicRoute>
         }
       />
+
       {/* Publicly accessible routes with Layout */}
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <Home />
+          </Layout>
+        }
+      />
       <Route
         path="/about"
         element={
@@ -79,16 +88,6 @@ function AppRoutes() {
       />
 
       {/* Protected Routes */}
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <Home />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
       <Route
         path="/video-call"
         element={
